@@ -24,24 +24,26 @@ setInterval(() => {
         const xml = iconv.decode(resBuf, 'win1255');
         const regex = /<item>(.*?)<\/item>/g;
         const results = Array.from(xml.matchAll(regex), x=>x[1]);
-        results.reverse(); // start from older news
-        const now = Date.now() / 1000;
-        for (const result of results) {
-          const matchTitle = result.match(/<title>(.*?)<\/title>/g);
-          const title = matchTitle[0].replace(/<\/?title>/g,'').replace('&amp;#1524;', '"');
-          const matchTime = result.match(/<pubDate>(.*?)<\/pubDate>/g);
-          const time = matchTime[0].replace(/<\/?pubDate>/g,'');
-          const matchLink = result.match(/<link>(.*?)<\/link>/g);
-          const articleLink = matchLink[0].replace(/<\/?link>/g,'');
-          const timestamp = Date.parse(time) / 1000;
-          if (now >= timestamp && timestamp > date){
-            displayTime = new Date(timestamp * 1000);
-            let h = displayTime.getHours();
-            let m = displayTime.getMinutes();
-            bot.sendMessage(chatId, (h < 10 ? '0' + h : h) + ":" + (m < 10 ? '0' + m : m) + " - <a href='" + articleLink + "'>" + title + "</a>", {parse_mode : "HTML"});
+        const now = Date.parse(results[0].match(/<pubDate>(.*?)<\/pubDate>/g)[0].replace(/<\/?pubDate>/g,'')) / 1000;
+        if (date < now){
+          results.reverse(); // start from older news
+          for (const result of results) {
+            const matchTitle = result.match(/<title>(.*?)<\/title>/g);
+            const title = matchTitle[0].replace(/<\/?title>/g,'').replace('&amp;', '').replace('#1524;', '"').replace('&#1524;', '"');
+            const matchTime = result.match(/<pubDate>(.*?)<\/pubDate>/g);
+            const time = matchTime[0].replace(/<\/?pubDate>/g,'');
+            const matchLink = result.match(/<link>(.*?)<\/link>/g);
+            const articleLink = matchLink[0].replace(/<\/?link>/g,'');
+            const timestamp = Date.parse(time) / 1000;
+            if (now >= timestamp && timestamp > date){
+              displayTime = new Date(timestamp * 1000);
+              let h = displayTime.getHours();
+              let m = displayTime.getMinutes();
+              bot.sendMessage(chatId, (h < 10 ? '0' + h : h) + ":" + (m < 10 ? '0' + m : m) + " - <a href='" + articleLink + "'>" + title + "</a>", {parse_mode : "HTML"});
+            }
           }
+          date = now;
         }
-        date = now;
       });
     });
   } else {
