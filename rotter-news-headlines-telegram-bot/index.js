@@ -21,11 +21,11 @@ setInterval(() => {
         resIdx += resBuf.write(stream, resIdx, 'binary');
       });
       res.on('end', () => {
-        const now = Date.now() / 1000;
         const xml = iconv.decode(resBuf, 'win1255');
         const regex = /<item>(.*?)<\/item>/g;
         const results = Array.from(xml.matchAll(regex), x=>x[1]);
         results.reverse(); // start from older news
+        const now = Date.now() / 1000;
         for (const result of results) {
           const matchTitle = result.match(/<title>(.*?)<\/title>/g);
           const title = matchTitle[0].replace(/<\/?title>/g,'').replace('&amp;#1524;', '"');
