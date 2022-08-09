@@ -9,19 +9,20 @@ const bot = new TelegramBot(token, {polling: true});
 // chat id number
 const chatId = XXXXXXXXX;
 const interval = 60 * 1000; // 1 minute polling interval
-var date;
+let date;
 
 setInterval(() => {
   if (date) {
     let req = https.get("https://rotter.net/rss/rotternews.xml", (res) => {
       res.setEncoding('binary'); 
-      var resBuf = new Buffer.alloc(102400);
-      var resIdx = 0;
+      let resBuf = new Buffer.alloc(102400);
+      let resIdx = 0;
       res.on('data', function(stream) {
         resIdx += resBuf.write(stream, resIdx, 'binary');
       });
       res.on('end', () => {
-        var xml = iconv.decode(resBuf, 'win1255');
+        const now = Date.now() / 1000;
+        const xml = iconv.decode(resBuf, 'win1255');
         const regex = /<item>(.*?)<\/item>/g;
         const results = Array.from(xml.matchAll(regex), x=>x[1]);
         results.reverse(); // start from older news
@@ -33,14 +34,14 @@ setInterval(() => {
           const matchLink = result.match(/<link>(.*?)<\/link>/g);
           const articleLink = matchLink[0].replace(/<\/?link>/g,'');
           const timestamp = Date.parse(time) / 1000;
-          if (timestamp > date){
+          if (now >= timestamp && timestamp > date){
             displayTime = new Date(timestamp * 1000);
             let h = displayTime.getHours();
             let m = displayTime.getMinutes();
             bot.sendMessage(chatId, (h < 10 ? '0' + h : h) + ":" + (m < 10 ? '0' + m : m) + " - <a href='" + articleLink + "'>" + title + "</a>", {parse_mode : "HTML"});
           }
         }
-        date = Date.now() / 1000;
+        date = now;
       });
     });
   } else {
