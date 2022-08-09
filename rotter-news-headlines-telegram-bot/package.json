@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "einatsof.github.io",
   "license": "MIT",
-	"homepage": "https://github.com/einatsof/nodejs-projects/tree/main/rotter-news-headlines-telegram-bot#readme"
+  "homepage": "https://github.com/einatsof/nodejs-projects/tree/main/rotter-news-headlines-telegram-bot#readme"
   "dependencies": {
     "iconv-lite": "^0.6.3",
     "node-telegram-bot-api": "^0.58.0"
