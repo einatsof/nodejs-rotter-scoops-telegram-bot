@@ -29,7 +29,7 @@ setInterval(() => {
           results.reverse(); // start from older news
           for (const result of results) {
             const matchTitle = result.match(/<title>(.*?)<\/title>/g);
-            const title = matchTitle[0].replace(/<\/?title>/g,'').replace('&amp;', '').replace('#1524;', '"').replace('&#1524;', '"');
+            const title = matchTitle[0].replace(/<\/?title>/g,'');
             const matchDate = result.match(/<pubDate>(.*?)<\/pubDate>/g);
             const date = matchDate[0].replace(/<\/?pubDate>/g,'');
             const matchLink = result.match(/<link>(.*?)<\/link>/g);
