@@ -5,7 +5,7 @@ const iconv = require('iconv-lite');
 
 // telegram bot token
 const token = 'XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, {polling: false});
 // chat id number
 const chatId = XXXXXXXXX;
 const interval = 60 * 1000; // 1 minute polling interval
@@ -50,7 +50,3 @@ setInterval(() => {
     time = Date.now() / 1000;
   }
 }, interval);
-
-bot.onText(/\/start/, (msg) => {
-  console.log(msg.chat.id);
-});
