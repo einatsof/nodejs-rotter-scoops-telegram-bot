@@ -39,7 +39,7 @@ setInterval(() => {
               displayTime = new Date(timestamp * 1000);
               let h = displayTime.getHours();
               let m = displayTime.getMinutes();
-              bot.sendMessage(chatId, (h < 10 ? '0' + h : h) + ":" + (m < 10 ? '0' + m : m) + " - <a href='" + articleLink + "'>" + title + "</a>", {parse_mode : "HTML"});
+              bot.sendMessage(chatId, `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m} - <a href='${articleLink}'>${title}</a>`, {parse_mode : "HTML"});
             }
           }
           time = last;
