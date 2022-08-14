@@ -71,7 +71,7 @@ function checkForJobs() {
         const jobLink = 'https://www.alljobs.co.il' + jobsList[i].attribs.href;
         const jobTitle = jobsList[i].children[0].children[0].data;
 				console.log(jobTitle, jobLink);
-        bot.sendMessage(chatId, "<a href='" + jobLink + "'>" + jobTitle + "</a>", {parse_mode : "HTML"});	
+        bot.sendMessage(chatId, `<a href='${jobLink}'>${jobTitle}</a>`, {parse_mode : "HTML"});	
       }
 
       const jobsHighlightList = $('div[class="job-content-top-title-highlight"], div[class="job-content-top-title-highligh-ltr"]')
@@ -89,7 +89,7 @@ function checkForJobs() {
         const jobLink = 'https://www.alljobs.co.il' + jobsHighlightList[i].attribs.href;
         const jobTitle = jobsHighlightList[i].children[0].children[0].children[0].data;
 				console.log(jobTitle, jobLink);
-        bot.sendMessage(chatId, "<a href='" + jobLink + "'>" + jobTitle + "</a>", {parse_mode : "HTML"});	
+        bot.sendMessage(chatId, `<a href='${jobLink}'>${jobTitle}</a>`, {parse_mode : "HTML"});	
       }
 
       fs.writeFileSync('data.txt', JSON.stringify(jobsData));
