@@ -1,5 +1,5 @@
 {
-  "name": "rotterheadlinesbot",
+  "name": "rotter-headlines-bot",
   "version": "1.0.0",
   "description": "Rotter news headlines telegram bot",
   "main": "index.js",
