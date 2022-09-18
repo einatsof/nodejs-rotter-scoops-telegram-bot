@@ -39,6 +39,7 @@ function init() {
   }
   
   // Check for jobs every hour
+  checkForJobs();
   setInterval(checkForJobs, 1000 * 60 * 60);
 }
 
