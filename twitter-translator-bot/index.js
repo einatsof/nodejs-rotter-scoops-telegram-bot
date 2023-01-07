@@ -2,12 +2,14 @@
 const { TwitterApi } = require('twitter-api-v2');
 const LanguageDetect = require('languagedetect');
 const translate = require('google-translate-api-x');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const client = new TwitterApi({
-  appKey: 'XXXXXXXXXXXXXXXXXXXXXXX',
-  appSecret: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-  accessToken: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', // bot account access token
-  accessSecret: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'  // bot account access secret
+  appKey: process.env.APP_KEY,
+  appSecret: process.env.APP_SECRET,
+  accessToken: process.env.ACCESS_TOKEN, // bot account access token
+  accessSecret: process.env.ACCESS_SECRET  // bot account access secret
 });
 
 const lngDetector = new LanguageDetect();
@@ -42,13 +44,13 @@ async function checkTweets(user, time) {
     });
     const date = new Date(tweet.created_at);
     const timestamp = date.getTime() / 1000;
-    if (time - timestamp < 60 * 60){
+    if (time - timestamp < 60 * 60) {
       let tweetText = tweetsArray[i].text;
       // Remove image links
       tweetText = tweetText.split(/\shttp?s/)[0];
       // Language detection
       const lang = lngDetector.detect(tweetText, 1);
-      if (lang.length == 1 && lang[0][0] == FROM_LANGUAGE){
+      if (lang.length == 1 && lang[0][0] == FROM_LANGUAGE) {
         // Retweet with translation
         const translated = await translate(tweetText, {from: FROM_LANGUAGE_ISO, to: TO_LANGUAGE_ISO});
         const { data: createdTweet } = await client.v2.tweet(translated.text, {
