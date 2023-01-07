@@ -2,12 +2,14 @@ const https = require('https');
 const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 const iconv = require('iconv-lite');
+const dotenv = require('dotenv');
 
+dotenv.config();
 // telegram bot token
-const token = 'XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+const token = process.env.TOKEN;
 const bot = new TelegramBot(token, {polling: false});
 // chat id number
-const chatId = XXXXXXXXX;
+const chatId = process.env.CHAT_ID;
 const interval = 60 * 1000; // 1 minute polling interval
 let time;
 
@@ -19,6 +21,9 @@ setInterval(() => {
       let resIdx = 0;
       res.on('data', function(stream) {
         resIdx += resBuf.write(stream, resIdx, 'binary');
+      });
+      res.on('error', (e) => {
+        console.error(e);
       });
       res.on('end', () => {
         const xml = iconv.decode(resBuf, 'win1255');
