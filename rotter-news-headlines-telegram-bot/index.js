@@ -13,7 +13,7 @@ const chatId = process.env.CHAT_ID;
 const interval = 60 * 1000; // 1 minute polling interval
 let time;
 
-setInterval(() => {
+function pollRotter() {
   if (time) {
     let req = https.get("https://rotter.net/rss/rotternews.xml", (res) => {
       res.setEncoding('binary'); 
@@ -24,6 +24,7 @@ setInterval(() => {
       });
       res.on('error', (e) => {
         console.error(e);
+        pollRotter();
       });
       res.on('end', () => {
         const xml = iconv.decode(resBuf, 'win1255');
@@ -54,4 +55,8 @@ setInterval(() => {
   } else {
     time = Date.now() / 1000;
   }
+}
+
+setInterval(() => {
+  pollRotter();
 }, interval);
