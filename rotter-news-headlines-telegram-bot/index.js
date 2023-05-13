@@ -24,12 +24,18 @@ function pollRotter() {
       });
       res.on('error', (e) => {
         console.error(e);
+        sleep(5000);
         pollRotter();
       });
-      res.on('end', () => {
+      res.on('end', async () => {
         const xml = iconv.decode(resBuf, 'win1255');
         const regex = /<item>(.*?)<\/item>/g;
         const results = Array.from(xml.matchAll(regex), x=>x[1]);
+        if (!results || results.length == 0) {
+          sleep(5000);
+          pollRotter();
+          return;
+        }
         const last = Date.parse(results[0].match(/<pubDate>(.*?)<\/pubDate>/g)[0].replace(/<\/?pubDate>/g,'')) / 1000;
         if (time < last){
           results.reverse(); // start from older news
@@ -42,15 +48,22 @@ function pollRotter() {
             const articleLink = matchLink[0].replace(/<\/?link>/g,'');
             const timestamp = Date.parse(date) / 1000;
             if (last >= timestamp && timestamp > time){
-              displayTime = new Date(timestamp * 1000);
+              const displayTime = new Date(timestamp * 1000);
               let h = displayTime.getHours();
               let m = displayTime.getMinutes();
-              bot.sendMessage(chatId, `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m} - <a href='${articleLink}'>${title}</a>`, {parse_mode : "HTML"});
+              const response = await bot.sendMessage(chatId, `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m} - <a href='${articleLink}'>${title}</a>`, {parse_mode : "HTML"});
+              console.log(date, title);
+              // console.log(response);
             }
           }
           time = last;
         }
       });
+    });
+    req.on("error", (error) => {
+      console.error(`An error occurred: ${error}`);
+      sleep(5000);
+      pollRotter();
     });
   } else {
     time = Date.now() / 1000;
@@ -60,3 +73,7 @@ function pollRotter() {
 setInterval(() => {
   pollRotter();
 }, interval);
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
