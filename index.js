@@ -1,19 +1,24 @@
 const https = require('https');
-const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 const iconv = require('iconv-lite');
 const dotenv = require('dotenv');
 
 dotenv.config();
+
 // telegram bot token
 const token = process.env.TOKEN;
-const bot = new TelegramBot(token, {polling: false});
 // chat id number
 const chatId = process.env.CHAT_ID;
 const interval = 60 * 1000; // 1 minute polling interval
 let time;
 
-function pollRotter() {
+if (!token || !chatId) {
+  throw new Error("TOKEN and CHAT_ID environment variables are required.");
+}
+
+const bot = new TelegramBot(token, {polling: false});
+
+async function pollRotter() {
   if (time) {
     let req = https.get("https://rotter.net/rss/rotternews.xml", (res) => {
       res.setEncoding('binary'); 

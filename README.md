@@ -1,15 +1,52 @@
-# Node.js Projects
+# Rotter News Headlines Telegram Bot
 
-## [AllJobs telegram bot](https://github.com/einatsof/nodejs-projects/tree/main/alljobs-telegram-bot)
-A telegram bot using [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api).  
-Node.js scraper for [alljobs.co.il](https://www.alljobs.co.il) using [cheerio](https://github.com/cheeriojs/cheerio) to parse the html.  
-A database ensures only new jobs are sent as a message to the user.
+This Node.js application is a Telegram bot that retrieves news headlines from the [Rotter.net](https://rotter.net/scoopscache.html) Scoops Forum via an RSS feed and sends new headlines as messages to a specified Telegram chat.
+It uses [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api) and [iconv-lite](https://github.com/ashtuchkin/iconv-lite).
 
-## [Rotter news headlines telegram bot](https://github.com/einatsof/nodejs-projects/tree/main/rotter-news-headlines-telegram-bot)
-A telegram bot using [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api).  
-RSS feed is taken from [rotter.net](https://rotter.net/scoopscache.html) scoops forum in fixed intervals, decoded from windows-1255 with [iconv-lite](https://github.com/ashtuchkin/iconv-lite), parsed and new headlines are sent as messages to chat.
+## Features
 
-## [Twitter translator bot](https://github.com/einatsof/nodejs-projects/tree/main/twitter-translator-bot)
-A twitter bot using [twitter-api-v2](https://github.com/plhery/node-twitter-api-v2).  
-Quote retweet with translation new tweets of specific users only if they are written in a specific language.  
-Language detection is done with [languagedetect](https://github.com/FGRibreau/node-language-detect) and translation is done with [google-translate-api-x](https://github.com/AidanWelch/google-translate-api).
+- Fetches RSS feed from Rotter.net at regular intervals (default: every 1 minute).
+- Decodes the RSS feed from Windows-1255 encoding using `iconv-lite`.
+- Parses the RSS feed to extract new headlines.
+- Sends new headlines to a Telegram chat with clickable links.
+
+## Prerequisites
+
+- Node.js installed on your machine.
+- A Telegram bot token. You can get this by creating a bot on Telegram using BotFather.
+- A Telegram chat ID where the bot will send the messages.
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/rotter-telegram-bot.git
+   cd rotter-telegram-bot
+   ```
+
+2. Install the dependencies:
+
+  ```bash
+  npm install
+  ```
+
+3. Create a .env file with the following contents:
+
+  ```dosini
+  TOKEN=your-telegram-bot-token
+  CHAT_ID=your-telegram-chat-id
+  ```
+
+4. Run the bot:
+
+  ```bash
+  node app.js
+  ```
+
+## Configuration
+
+- **TOKEN:** Your Telegram bot token.
+- **CHAT_ID:** The ID of the Telegram chat where the bot will send messages.
+- **INTERVAL:** (Optional) The polling interval in milliseconds (default is 60000, or 1 minute).
+
