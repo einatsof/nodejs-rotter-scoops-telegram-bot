@@ -22,8 +22,8 @@ It uses [`node-telegram-bot-api`](https://github.com/yagop/node-telegram-bot-api
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/rotter-telegram-bot.git
-   cd rotter-telegram-bot
+   git clone https://github.com/einatsof/nodejs-rotter-scoops-telegram-bot.git
+   cd nodejs-rotter-scoops-telegram-bot
    ```
 
 2. Install the dependencies:

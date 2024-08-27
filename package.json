@@ -1,5 +1,5 @@
 {
-  "name": "rotter-headlines-bot",
+  "name": "nodejs-rotter-telegram-bot",
   "version": "1.0.0",
   "description": "Rotter news headlines telegram bot",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "einatsof.github.io",
   "license": "MIT",
-  "homepage": "https://github.com/einatsof/nodejs-projects/tree/main/rotter-news-headlines-telegram-bot#readme",
+  "homepage": "https://github.com/einatsof/nodejs-rotter-scoops-telegram-bot#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
     "iconv-lite": "^0.6.3",
