@@ -1,7 +1,8 @@
 # Rotter News Headlines Telegram Bot
 
 This Node.js application is a Telegram bot that retrieves news headlines from the [Rotter.net](https://rotter.net/scoopscache.html) Scoops Forum via an RSS feed and sends new headlines as messages to a specified Telegram chat.
-It uses [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api) and [iconv-lite](https://github.com/ashtuchkin/iconv-lite).
+
+It uses [`node-telegram-bot-api`](https://github.com/yagop/node-telegram-bot-api) and [`iconv-lite`](https://github.com/ashtuchkin/iconv-lite).
 
 ## Features
 
@@ -46,7 +47,7 @@ It uses [node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api) 
 
 ## Configuration
 
-- **TOKEN:** Your Telegram bot token.
-- **CHAT_ID:** The ID of the Telegram chat where the bot will send messages.
-- **INTERVAL:** (Optional) The polling interval in milliseconds (default is 60000, or 1 minute).
+- **`TOKEN`:** Your Telegram bot token.
+- **`CHAT_ID`:** The ID of the Telegram chat where the bot will send messages.
+- **`INTERVAL`:** (Optional) The polling interval in milliseconds (default is 60000, or 1 minute).
 
